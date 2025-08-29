@@ -37,6 +37,7 @@ export default async function CategoryPage({
       slug: true,
       categories: true,
       meta: true,
+      servings: true,
     },
   })
 

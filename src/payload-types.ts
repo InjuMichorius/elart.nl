@@ -69,6 +69,7 @@ export interface Config {
     recipes: Recipe;
     media: Media;
     categories: Category;
+    ingredients: Ingredient;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -85,6 +86,7 @@ export interface Config {
     recipes: RecipesSelect<false> | RecipesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    ingredients: IngredientsSelect<false> | IngredientsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -242,6 +244,15 @@ export interface Recipe {
   };
   relatedRecipes?: (string | Recipe)[] | null;
   categories?: (string | Category)[] | null;
+  servings: number;
+  ingredientsList?:
+    | {
+        ingredient: string | Ingredient;
+        amount: number;
+        unit?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -338,6 +349,18 @@ export interface Category {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ingredients".
+ */
+export interface Ingredient {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -955,6 +978,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'ingredients';
+        value: string | Ingredient;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -1209,6 +1236,15 @@ export interface RecipesSelect<T extends boolean = true> {
   content?: T;
   relatedRecipes?: T;
   categories?: T;
+  servings?: T;
+  ingredientsList?:
+    | T
+    | {
+        ingredient?: T;
+        amount?: T;
+        unit?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {
@@ -1291,6 +1327,17 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ingredients_select".
+ */
+export interface IngredientsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

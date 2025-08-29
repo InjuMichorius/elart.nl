@@ -42,6 +42,7 @@ export const Recipes: CollectionConfig<'recipes'> = {
     title: true,
     slug: true,
     categories: true,
+    servings: true,
     meta: {
       image: true,
       description: true,
@@ -131,6 +132,37 @@ export const Recipes: CollectionConfig<'recipes'> = {
               },
               hasMany: true,
               relationTo: 'categories',
+            },
+            {
+              name: 'servings',
+              type: 'number',
+              label: 'Servings',
+              required: true,
+              defaultValue: 4,
+            },
+            {
+              name: 'ingredientsList',
+              type: 'array',
+              label: 'Ingredients',
+              fields: [
+                {
+                  name: 'ingredient',
+                  type: 'relationship',
+                  relationTo: 'ingredients',
+                  required: true,
+                },
+                {
+                  name: 'amount',
+                  type: 'number',
+                  required: true,
+                  label: 'Amount',
+                },
+                {
+                  name: 'unit',
+                  type: 'text',
+                  label: 'Unit (e.g. grams, pieces, cups)',
+                },
+              ],
             },
           ],
           label: 'Meta',

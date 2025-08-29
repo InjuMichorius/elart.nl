@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
+import IngredientList from '@/components/IngredientList'
 
 import type { Recipe } from '@/payload-types'
 
@@ -63,6 +64,7 @@ export default async function Recipe({ params: paramsPromise }: Args) {
       <RecipeHero recipe={recipe} />
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
+          <IngredientList recipe={recipe} />
           <RichText className="max-w-[48rem] mx-auto" data={recipe.content} enableGutter={false} />
           {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
             <RelatedRecipes
