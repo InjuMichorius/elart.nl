@@ -8,7 +8,9 @@ import type { Recipe } from '@/payload-types'
 
 import { ImageMedia } from '@/components/Media/ImageMedia'
 
-export type CardRecipeData = Pick<Recipe, 'slug' | 'categories' | 'meta' | 'title' | 'servings'>
+export type CardRecipeData = Pick<Recipe, 'slug' | 'categories' | 'meta' | 'title'> & {
+  servings?: number
+}
 
 export const Card: React.FC<{
   alignItems?: 'center'

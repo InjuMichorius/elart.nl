@@ -311,5 +311,6 @@ export const recipe1: (args: RecipeArgs) => RequiredDataFromCollectionSlug<'reci
     },
     relatedRecipes: [], // this is populated by the seed script
     title: 'Digital Horizons: A Glimpse into Tomorrow',
+    servings: 4,
   }
 }

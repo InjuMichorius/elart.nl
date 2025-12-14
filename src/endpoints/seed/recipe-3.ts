@@ -264,5 +264,6 @@ export const recipe3: (args: RecipeArgs) => RequiredDataFromCollectionSlug<'reci
     },
     relatedRecipes: [], // this is populated by the seed script
     title: 'Dollar and Sense: The Financial Forecast',
+    servings: 4,
   }
 }

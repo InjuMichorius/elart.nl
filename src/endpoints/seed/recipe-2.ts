@@ -228,5 +228,6 @@ export const recipe2: (args: RecipeArgs) => RequiredDataFromCollectionSlug<'reci
     },
     relatedRecipes: [], // this is populated by the seed script
     title: 'Global Gaze: Beyond the Headlines',
+    servings: 4,
   }
 }

@@ -64,7 +64,22 @@ export default async function Recipe({ params: paramsPromise }: Args) {
       <RecipeHero recipe={recipe} />
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <IngredientList recipe={recipe} />
+          <IngredientList
+            recipe={{
+              ...recipe,
+              ingredientsList:
+                recipe.ingredientsList?.map((item) => ({
+                  amount: item.amount,
+                  ingredient:
+                    typeof item.ingredient === 'string'
+                      ? { title: item.ingredient }
+                      : item.ingredient
+                        ? { title: item.ingredient.title }
+                        : null,
+                  unit: item.unit ?? undefined,
+                })) ?? [],
+            }}
+          />
           <RichText className="max-w-[48rem] mx-auto" data={recipe.content} enableGutter={false} />
           {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
             <RelatedRecipes

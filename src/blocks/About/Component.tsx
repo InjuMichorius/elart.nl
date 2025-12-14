@@ -1,7 +1,6 @@
 // components/blocks/AboutBlock.tsx
 import React from 'react'
 import type { AboutBlock as AboutBlockProps } from '@/payload-types'
-import { cn } from '@/utilities/ui'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
