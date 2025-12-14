@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import type { Recipe } from '../../../payload-types'
 
@@ -16,7 +16,7 @@ export const revalidateRecipe: CollectionAfterChangeHook<Recipe> = ({
       payload.logger.info(`Revalidating recipe at path: ${path}`)
 
       revalidatePath(path)
-      revalidateTag('recipes-sitemap')
+      revalidatePath('/recipes-sitemap.xml')
     }
 
     // If the recipe was previously published, we need to revalidate the old path
@@ -26,7 +26,7 @@ export const revalidateRecipe: CollectionAfterChangeHook<Recipe> = ({
       payload.logger.info(`Revalidating old recipe at path: ${oldPath}`)
 
       revalidatePath(oldPath)
-      revalidateTag('recipes-sitemap')
+      revalidatePath('/recipes-sitemap.xml')
     }
   }
   return doc
@@ -37,7 +37,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<Recipe> = ({ doc, req: 
     const path = `/recipes/${doc?.slug}`
 
     revalidatePath(path)
-    revalidateTag('recipes-sitemap')
+    revalidatePath('/recipes-sitemap.xml')
   }
 
   return doc
