@@ -35,7 +35,7 @@ export const Card: React.FC<{
     <article
       tabIndex={0}
       className={cn('overflow-hidden hover:cursor-pointer group relative', className)}
-      ref={card.ref}
+      ref={card.ref as React.Ref<HTMLElement>}
     >
       <div className="relative overflow-hidden rounded-2xl">
         {!metaImage && <p>No image</p>}
@@ -99,7 +99,7 @@ export const Card: React.FC<{
         href={href}
         className="absolute inset-0 z-10"
         aria-label={titleToUse || 'Card link'}
-        ref={link.ref}
+        ref={link.ref as React.Ref<HTMLAnchorElement>}
       />
     </article>
   )
