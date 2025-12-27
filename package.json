@@ -1,7 +1,7 @@
 {
-  "name": "shop",
+  "name": "elart-website",
   "version": "1.0.0",
-  "description": "Website template for Payload",
+  "description": "Recipe website for Elart",
   "license": "MIT",
   "type": "module",
   "scripts": {
