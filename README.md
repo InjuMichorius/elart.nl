@@ -1,3 +1,5 @@
+<img width="1200" height="304" alt="Mockup of recipe website on laptop" src="https://github.com/user-attachments/assets/b365f72f-8ebc-4204-9854-f7e8762c4cd3" />
+
 # Elart.nl - Recipe Website
 
 A recipe website built with [Payload CMS](https://payloadcms.com) and [Next.js](https://nextjs.org).
