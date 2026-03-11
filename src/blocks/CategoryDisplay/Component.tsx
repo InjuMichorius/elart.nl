@@ -12,6 +12,25 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 })
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 },
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   const updatePosition = (target: HTMLElement) => {
     const container = containerRef.current
@@ -33,7 +52,6 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
     updatePosition(e.currentTarget)
   }
 
-  // Optional: Update position on window resize to prevent alignment drift
   useEffect(() => {
     const handleResize = () => {
       if (activeIndex !== null && containerRef.current) {
@@ -48,7 +66,12 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
   return (
     <div className="flex flex-col items-center justify-center py-12 bg-beige gap-8 min-h-[30rem]">
       {title && (
-        <h2 className="text-3xl font-anton font-bold text-black uppercase font-anton text-black uppercase">
+        <h2 style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+              transition: `opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s`,
+            }}
+            className="text-3xl font-anton font-bold text-brown uppercase font-anton uppercase">
           {title}
         </h2>
       )}
@@ -58,7 +81,6 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
         className="relative flex flex-wrap gap-4 justify-center px-4 max-w-7xl mx-auto"
         onMouseLeave={() => setActiveIndex(null)}
       >
-        {/* The Animated Highlighting Background */}
         <div
           className="absolute bg-beigeDark rounded-2xl pointer-events-none z-0 transition-all duration-500"
           style={{
@@ -74,7 +96,6 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
 
         {Array.isArray(categories) &&
           categories.map((cat, i) => {
-            // Payload CMS check for populated vs ID-only categories
             const isObject = typeof cat === 'object' && cat !== null
             const catTitle = isObject ? (cat as any).title : String(cat)
             const catSlug = isObject ? (cat as any).slug : ''
@@ -87,6 +108,11 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
                 href={`/categories/${catSlug}`}
                 className="relative z-10 flex flex-col items-center gap-4 p-6 rounded-2xl transition-colors duration-300 group"
                 onMouseEnter={handleMouseEnter(i)}
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                  transition: `opacity 0.5s ease-out ${i * 0.1}s, transform 0.5s ease-out ${i * 0.1}s`,
+                }}
               >
                 {catImage && (
                   <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-white shadow-sm transition-transform duration-300 group-hover:scale-105">
@@ -97,7 +123,7 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
                     />
                   </div>
                 )}
-                <span className="text-black font-anton text-xl transition-colors duration-300 group-hover:text-green">
+                <span className="text-brown font-anton text-xl transition-colors duration-300 group-hover:text-green">
                   {catTitle}
                 </span>
               </Link>

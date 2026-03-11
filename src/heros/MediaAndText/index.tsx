@@ -6,7 +6,6 @@ import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
 
 const getYouTubeVideoId = (url: string): string | null => {
   const patterns = [
@@ -22,12 +21,7 @@ const getYouTubeVideoId = (url: string): string | null => {
   return null
 }
 
-export const MediaAndTextHero: React.FC<Page['hero']> = ({
-  links,
-  media,
-  richText,
-  youtubeUrl,
-}) => {
+export const MediaAndTextHero: React.FC<Page['hero']> = ({ links, media, title, youtubeUrl }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -42,10 +36,8 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({
       data-theme="dark"
     >
       <div className="container z-10 relative flex items-center justify-center">
-        <div className="max-w-[36.5rem] md:text-center">
-          {richText && (
-            <RichText className="mb-6 font-anton uppercase" data={richText} enableGutter={false} />
-          )}
+        <div className="max-w-[70rem] md:text-center">
+          {title && <h1 className="mb-6 font-anton uppercase text-beige text-9xl">{title}</h1>}
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex md:justify-center gap-4">
               {links.map(({ link }, i) => {
@@ -61,23 +53,23 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({
       </div>
       <div className="absolute inset-0 -z-10">
         {videoId ? (
-          <div
-            className="absolute inset-0 overflow-hidden transition-all duration-500"
-          >
             <div
-              className="w-[120%] h-[120%] -ml-[10%] -mt-[10%]"
+              className="absolute inset-0 overflow-hidden transition-all duration-500"
             >
-              <iframe
-                className="w-full h-full"
-                style={{ objectFit: 'cover' }}
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0&rel=0`}
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                title="YouTube video"
-              />
+              <div
+                className="w-[120%] h-[120%] -ml-[10%] -mt-[10%]"
+              >
+                <iframe
+                  className="w-full h-full"
+                  style={{ objectFit: 'cover' }}
+                  src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0&rel=0`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title="YouTube video"
+                />
+              </div>
             </div>
-          </div>
-        ) : (
+          ) : (
           media &&
           typeof media === 'object' && (
             <Media fill imgClassName="-z-10 object-cover" priority resource={media} />

@@ -41,6 +41,9 @@ export const hero: Field = {
     {
       name: 'richText',
       type: 'richText',
+      admin: {
+        condition: (_, { type } = {}) => type !== 'mediaAndText',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -52,6 +55,14 @@ export const hero: Field = {
         },
       }),
       label: false,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      admin: {
+        condition: (_, { type } = {}) => type === 'mediaAndText',
+      },
+      label: 'Title',
     },
     linkGroup({
       overrides: {
