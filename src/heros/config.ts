@@ -24,12 +24,8 @@ export const hero: Field = {
           value: 'none',
         },
         {
-          label: 'Category Hero',
-          value: 'category',
-        },
-        {
-          label: 'High Impact',
-          value: 'highImpact',
+          label: 'Media and Text',
+          value: 'mediaAndText',
         },
         {
           label: 'Medium Impact',
@@ -63,23 +59,22 @@ export const hero: Field = {
       },
     }),
     {
-      name: 'categories',
-      type: 'relationship',
-      relationTo: 'categories',
-      hasMany: true,
+      name: 'youtubeUrl',
+      type: 'text',
       admin: {
-        condition: (_, { type }) => type === 'category',
-        description: 'Select categories to display in the Category Hero',
+        condition: (_, { type } = {}) => type === 'mediaAndText',
       },
+      label: 'YouTube Video URL',
     },
     {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type, youtubeUrl } = {}) =>
+          (type === 'mediaAndText' && !youtubeUrl) || type === 'mediumImpact',
       },
+      label: 'Background Image',
       relationTo: 'media',
-      required: true,
     },
   ],
   label: false,

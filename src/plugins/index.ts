@@ -15,7 +15,7 @@ import { Page, Recipe } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Recipe | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Elart` : 'Elart'
 }
 
 const generateURL: GenerateURL<Recipe | Page> = ({ doc }) => {

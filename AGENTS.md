@@ -68,7 +68,11 @@ Import order: 1) Built-in/External type, 2) Payload/Plugin, 3) Local access/util
 
 ### React Components
 
+If using React hooks (useState, useRef, useEffect, etc.), add `"use client"` at the top of the file.
+
 ```typescript
+"use client"
+
 import type { FC } from 'react'
 import { cn } from '@/utilities/ui'
 

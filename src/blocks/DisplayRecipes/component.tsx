@@ -12,8 +12,8 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
   const hasButton = !!(button && button.length > 0 && button[0]?.link)
 
   return (
-    <div className={cn('container mx-auto py-12', className)}>
-      <div className="grid gap-8 md:grid-cols-12">
+    <div className={cn('py-12 bg-beigeDark', className)}>
+      <div className="container mx-auto grid gap-8 md:grid-cols-12">
         {title && (
           <h2
             className={cn(

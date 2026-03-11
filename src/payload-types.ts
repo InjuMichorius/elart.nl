@@ -154,7 +154,7 @@ export interface Page {
   id: string;
   title: string;
   hero: {
-    type: 'none' | 'category' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'mediaAndText' | 'mediumImpact' | 'lowImpact';
     richText?: {
       root: {
         type: string;
@@ -194,14 +194,12 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    /**
-     * Select categories to display in the Category Hero
-     */
-    categories?: (string | Category)[] | null;
+    youtubeUrl?: string | null;
     media?: (string | null) | Media;
   };
   layout: (
     | CallToActionBlock
+    | CategoryDisplayBlock
     | ContentBlock
     | MediaBlock
     | AboutBlock
@@ -441,6 +439,20 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategoryDisplayBlock".
+ */
+export interface CategoryDisplayBlock {
+  title?: string | null;
+  /**
+   * Select categories to display
+   */
+  categories: (string | Category)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'categoryDisplay';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1099,13 +1111,14 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        categories?: T;
+        youtubeUrl?: T;
         media?: T;
       };
   layout?:
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        categoryDisplay?: T | CategoryDisplayBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         about?: T | AboutBlockSelect<T>;
@@ -1148,6 +1161,16 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategoryDisplayBlock_select".
+ */
+export interface CategoryDisplayBlockSelect<T extends boolean = true> {
+  title?: T;
+  categories?: T;
   id?: T;
   blockName?: T;
 }

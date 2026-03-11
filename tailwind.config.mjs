@@ -93,13 +93,15 @@ const config = {
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
         // Custom colors
-        beige: '#FFF9E1',
-        green: '#5F6C37',
+        beige: '#FFF7E6',
+        beigeDark: '#FBE7B9',
+        darkBrown: '#1D1611',
+        green: '#2D5A27',
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
-        agrandir: ['var(--font-agrandir)'],
+        anton: ['var(--font-anton)'],
       },
       keyframes: {
         'accordion-down': {
