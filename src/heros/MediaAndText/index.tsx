@@ -102,7 +102,7 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({ links, media, title, 
         </div>
       </div>
       <div
-        className={`absolute inset-0 -z-10 overflow-hidden bg-black transition-all duration-500 ease-in ${showM6 ? 'm-4 rounded-[1rem]' : ''}`}
+        className={`absolute inset-0 -z-10 overflow-hidden bg-black transition-all duration-500 ease-in ${showM6 ? 'm-[0.5rem] md:m-4 rounded-[1rem]' : ''}`}
       >
         {videoId ? (
           <div className="relative w-full h-full pointer-events-none">
