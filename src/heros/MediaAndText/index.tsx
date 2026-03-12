@@ -1,6 +1,6 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -25,18 +25,32 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({ links, media, title, 
   const { setHeaderTheme } = useHeaderTheme()
   const [isVisible, setIsVisible] = useState(false)
   const [showM6, setShowM6] = useState(false)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const scrollYRef = useRef(0)
 
   useEffect(() => {
     setHeaderTheme('dark')
     const timer = setTimeout(() => setIsVisible(true), 100)
     const m6Timer = setTimeout(() => setShowM6(true), 1000)
+
+    const handleScroll = () => {
+      scrollYRef.current = window.scrollY
+      if (titleRef.current) {
+        titleRef.current.style.transform = `translateY(${scrollYRef.current * 0.4}px)`
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     return () => {
       clearTimeout(timer)
       clearTimeout(m6Timer)
+      window.removeEventListener('scroll', handleScroll)
     }
   }, [setHeaderTheme])
 
   const videoId = youtubeUrl ? getYouTubeVideoId(youtubeUrl) : null
+  const words = title ? title.split(' ') : []
 
   return (
     <div
@@ -50,13 +64,24 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({ links, media, title, 
       />
       <div className="container z-10 relative flex items-center justify-center">
         <div className="max-w-[70rem] text-center">
-          {title && (
+          {words.length > 0 && (
             <h1
-              className={`font-anton uppercase text-beige transition-all duration-700 ease-out transform text-balance ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              } text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl`}
+              ref={titleRef}
+              className="font-anton uppercase text-beige text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl will-change-transform"
             >
-              {title}
+              {words.map((word, i) => (
+                <span key={i} className="inline-block overflow-hidden mr-[0.25em] last:mr-0">
+                  <span
+                    className="inline-block transition-transform ease-out duration-700"
+                    style={{
+                      transitionDelay: `${i * 80}ms`,
+                      transform: isVisible ? 'translateY(0)' : 'translateY(-110%)',
+                    }}
+                  >
+                    {word}
+                  </span>
+                </span>
+              ))}
             </h1>
           )}
           {Array.isArray(links) && links.length > 0 && (
@@ -76,7 +101,9 @@ export const MediaAndTextHero: React.FC<Page['hero']> = ({ links, media, title, 
           )}
         </div>
       </div>
-      <div className={`absolute inset-0 -z-10 overflow-hidden bg-black transition-all duration-500 ease-in ${showM6 ? 'm-4 rounded-[1rem]' : ''}`}>
+      <div
+        className={`absolute inset-0 -z-10 overflow-hidden bg-black transition-all duration-500 ease-in ${showM6 ? 'm-4 rounded-[1rem]' : ''}`}
+      >
         {videoId ? (
           <div className="relative w-full h-full pointer-events-none">
             <iframe
