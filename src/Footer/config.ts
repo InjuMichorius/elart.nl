@@ -10,6 +10,47 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'tagline',
+      type: 'text',
+      label: 'Tagline (under logo)',
+    },
+    {
+      name: 'email',
+      type: 'email',
+      label: 'Contact email address',
+    },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      label: 'Social media links',
+      maxRows: 6,
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          label: 'Platform',
+          required: true,
+          options: [
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'YouTube', value: 'youtube' },
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Pinterest', value: 'pinterest' },
+            { label: 'X / Twitter', value: 'twitter' },
+          ],
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'URL',
+          required: true,
+        },
+      ],
+      admin: {
+        initCollapsed: true,
+      },
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
