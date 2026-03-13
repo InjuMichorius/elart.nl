@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -31,6 +31,7 @@
 
   :root {
     --font-anton: 'Anton', sans-serif;
+    --font-roboto: 'Roboto', sans-serif;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 

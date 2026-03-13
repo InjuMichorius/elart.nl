@@ -36,7 +36,7 @@ export const Card: React.FC<{
     <article
       tabIndex={0}
       className={cn(
-        'bg-beige rounded-2xl overflow-hidden h-fit hover:bg-green hover:cursor-pointer hover:-translate-y-2 group relative transition-all duration-500',
+        'bg-beige rounded-2xl overflow-hidden h-fit md:hover:bg-green md:hover:cursor-pointer md:hover:-translate-y-2 group relative transition-all duration-500',
         isActive && 'bg-green -translate-y-2',
         className,
       )}
@@ -48,14 +48,14 @@ export const Card: React.FC<{
           <ImageMedia
             resource={metaImage}
             imgClassName={cn(
-              'w-full h-full object-cover aspect-[4/2] transition-transform duration-500 group-hover:scale-105',
+              'w-full h-full object-cover aspect-[4/2] transition-transform duration-500 md:group-hover:scale-105',
               isActive && 'scale-105',
             )}
           />
         )}
         <div
           className={cn(
-            'absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/20',
+            'absolute inset-0 bg-black/0 transition-colors duration-500 md:group-hover:bg-black/20',
             isActive && 'bg-black/20',
           )}
         />
@@ -104,7 +104,7 @@ export const Card: React.FC<{
       </div>
       <div
         className={cn(
-          'p-4 group-hover:text-beige transition-all duration-500',
+          'p-4 md:group-hover:text-beige transition-all duration-500',
           isActive && 'text-beige',
         )}
       >

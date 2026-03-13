@@ -102,6 +102,7 @@ const config = {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
         anton: ['var(--font-anton)'],
+        roboto: ['var(--font-roboto)'],
       },
       keyframes: {
         'accordion-down': {

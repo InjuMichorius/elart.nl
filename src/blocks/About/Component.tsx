@@ -13,8 +13,8 @@ export const AboutBlock: React.FC<Props> = ({ title, text, media }) => {
     <div className="pt-3 pb-3 bg-beige text-black">
       <div className="container mx-auto py-12 flex flex-col-reverse md:flex-row items-center place-content-between gap-[3rem]">
         <div>
-          <h2 className="text-3xl font-bold mb-4">{title}</h2>
-          {text && <RichText data={text} className="p-0" />}
+          <h2 className="text-3xl font-anton uppercase mb-4">{title}</h2>
+          {text && <RichText data={text} className="p-0 font-roboto" />}
         </div>
 
         {media && (

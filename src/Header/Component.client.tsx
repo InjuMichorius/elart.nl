@@ -64,13 +64,28 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             <span className="relative w-5 h-5 flex-shrink-0">
               {/* Hamburger lines */}
               <span
-                className={`absolute left-0 top-[4px] w-4 h-[2px] bg-beige transition-all duration-300 origin-center rounded-full ${menuOpen ? 'top-[10px] -translate-y-1/2 rotate-45' : ''}`}
+                className="absolute left-0 w-4 h-[2px] bg-beige rounded-full origin-center"
+                style={{
+                  top: menuOpen ? '50%' : '4px',
+                  transform: menuOpen ? 'translateY(-50%) rotate(45deg)' : 'none',
+                  transition: 'top 0.3s, transform 0.3s',
+                }}
               />
               <span
-                className={`absolute left-0 top-1/2 -translate-y-1/2 w-4 h-[2px] bg-beige transition-all duration-300 rounded-full ${menuOpen ? 'opacity-0' : ''}`}
+                className="absolute left-0 top-1/2 w-4 h-[2px] bg-beige rounded-full"
+                style={{
+                  transform: 'translateY(-50%)',
+                  opacity: menuOpen ? 0 : 1,
+                  transition: 'opacity 0.3s',
+                }}
               />
               <span
-                className={`absolute left-0 bottom-[4px] w-4 h-[2px] bg-beige transition-all duration-300 origin-center rounded-full ${menuOpen ? 'bottom-[10px] translate-y-1/2 -rotate-45' : ''}`}
+                className="absolute left-0 w-4 h-[2px] bg-beige rounded-full origin-center"
+                style={{
+                  bottom: menuOpen ? '50%' : '4px',
+                  transform: menuOpen ? 'translateY(50%) rotate(-45deg)' : 'none',
+                  transition: 'bottom 0.3s, transform 0.3s',
+                }}
               />
             </span>
             <span>{menuOpen ? 'Sluiten' : 'Menu'}</span>

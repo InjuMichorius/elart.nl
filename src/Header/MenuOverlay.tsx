@@ -18,9 +18,10 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ data, isOpen, onClose 
 
   return (
     <div
-      className={`fixed inset-0 z-40 bg-beige flex flex-col items-center justify-center transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 bg-beige flex flex-col items-center justify-center transition-all duration-300 ${
         isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
+      style={{ height: '100dvh', minHeight: '-webkit-fill-available' }}
       aria-hidden={!isOpen}
     >
       <nav className="flex flex-col items-center gap-8">

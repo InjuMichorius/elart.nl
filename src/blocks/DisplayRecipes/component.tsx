@@ -16,6 +16,7 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
   const [isVisible, setIsVisible] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const visibleCards = useRef<Set<number>>(new Set())
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,14 +46,22 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
 
     cardRefs.current.forEach((el, index) => {
       if (!el) return
-      // rootMargin clips a band around the center: top shrinks from bottom, bottom shrinks from top
-      // Result: only triggers when the card overlaps the middle 30% of the viewport
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry?.isIntersecting) {
-            setActiveIndex(index)
+            visibleCards.current.add(index)
+            // Activate the card with the highest index currently in the zone
+            // (last entered = most centered when scrolling either direction)
+            const max = Math.max(...visibleCards.current)
+            setActiveIndex(max)
           } else {
-            setActiveIndex((prev) => (prev === index ? null : prev))
+            visibleCards.current.delete(index)
+            if (visibleCards.current.size === 0) {
+              setActiveIndex(null)
+            } else {
+              const max = Math.max(...visibleCards.current)
+              setActiveIndex(max)
+            }
           }
         },
         {
