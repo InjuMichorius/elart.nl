@@ -19,7 +19,7 @@ const buttonVariants = cva(
         sm: 'h-9 px-3',
       },
       variant: {
-        default: 'bg-green text-primary-foreground hover:bg-green/90',
+        default: 'bg-green text-beige hover:bg-green/90',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'hover:bg-card hover:text-accent-foreground',
         link: 'text-primary items-start justify-start text-base underline-offset-8 hover:underline',

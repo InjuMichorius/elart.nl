@@ -14,6 +14,8 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
   const hasButton = !!(button && button.length > 0 && button[0]?.link)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,6 +34,38 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
 
     return () => observer.disconnect()
   }, [])
+
+  // Activate the card closest to the vertical center of the viewport,
+  // but only on devices that don't support hover (touch screens).
+  useEffect(() => {
+    const supportsHover = window.matchMedia('(hover: hover)').matches
+    if (supportsHover) return
+
+    const observers: IntersectionObserver[] = []
+
+    cardRefs.current.forEach((el, index) => {
+      if (!el) return
+      // rootMargin clips a band around the center: top shrinks from bottom, bottom shrinks from top
+      // Result: only triggers when the card overlaps the middle 30% of the viewport
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry?.isIntersecting) {
+            setActiveIndex(index)
+          } else {
+            setActiveIndex((prev) => (prev === index ? null : prev))
+          }
+        },
+        {
+          rootMargin: '-35% 0px -35% 0px',
+          threshold: 0,
+        },
+      )
+      observer.observe(el)
+      observers.push(observer)
+    })
+
+    return () => observers.forEach((o) => o.disconnect())
+  }, [recipes])
 
   return (
     <div className={cn('py-12 bg-beigeDark', className)} ref={containerRef}>
@@ -65,13 +99,21 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
                 return (
                   <div
                     key={index}
+                    ref={(el) => {
+                      cardRefs.current[index] = el
+                    }}
                     style={{
                       opacity: isVisible ? 1 : 0,
                       transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
                       transition: `opacity 0.5s ease-out ${index * 0.1}s, transform 0.5s ease-out ${index * 0.1}s`,
                     }}
                   >
-                    <Card doc={recipe.recipe} relationTo="recipes" showCategories={true} />
+                    <Card
+                      doc={recipe.recipe}
+                      relationTo="recipes"
+                      showCategories={true}
+                      isActive={activeIndex === index}
+                    />
                   </div>
                 )
               }

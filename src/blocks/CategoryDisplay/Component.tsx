@@ -66,12 +66,14 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
   return (
     <div className="flex flex-col items-center justify-center py-12 bg-beige gap-8 min-h-[30rem]">
       {title && (
-        <h2 style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-              transition: `opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s`,
-            }}
-            className="text-3xl font-anton font-bold text-brown uppercase font-anton uppercase">
+        <h2
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+            transition: `opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s`,
+          }}
+          className="text-3xl font-anton font-bold text-brown uppercase font-anton uppercase"
+        >
           {title}
         </h2>
       )}
@@ -115,7 +117,7 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
                 }}
               >
                 {catImage && (
-                  <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+                  <div className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden bg-white shadow-sm transition-transform duration-300 group-hover:scale-105">
                     <Media
                       resource={catImage}
                       className="w-full h-full"
