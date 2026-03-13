@@ -64,7 +64,7 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
   }, [activeIndex])
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 bg-beige gap-8 min-h-[30rem]">
+    <div className="flex flex-col items-center justify-center py-12 lg:py-24 bg-beige gap-8 min-h-[30rem]">
       {title && (
         <h2
           style={{
@@ -80,7 +80,7 @@ export const CategoryDisplayBlock: React.FC<CategoryDisplayBlockProps> = ({
 
       <div
         ref={containerRef}
-        className="relative flex flex-wrap gap-4 justify-center px-4 max-w-7xl mx-auto"
+        className="relative flex flex-wrap justify-center px-4 max-w-7xl mx-auto"
         onMouseLeave={() => setActiveIndex(null)}
       >
         <div

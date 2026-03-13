@@ -77,7 +77,7 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
   }, [recipes])
 
   return (
-    <div className={cn('py-12 bg-beigeDark', className)} ref={containerRef}>
+    <div className={cn('py-12 lg:py-24 bg-beigeDark', className)} ref={containerRef}>
       <div className="container mx-auto grid gap-8 md:grid-cols-12">
         {title && (
           <h2

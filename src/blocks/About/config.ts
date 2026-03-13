@@ -17,11 +17,20 @@ export const About: Block = {
       required: true,
     },
     {
-      name: 'media',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Image',
-      required: true,
+      name: 'images',
+      type: 'array',
+      label: 'Images',
+      minRows: 1,
+      maxRows: 6,
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Image',
+          required: true,
+        },
+      ],
     },
   ],
 }

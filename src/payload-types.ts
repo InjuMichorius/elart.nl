@@ -536,7 +536,12 @@ export interface AboutBlock {
     };
     [k: string]: unknown;
   };
-  media: string | Media;
+  images?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'about';
@@ -1218,7 +1223,12 @@ export interface MediaBlockSelect<T extends boolean = true> {
 export interface AboutBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
-  media?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
