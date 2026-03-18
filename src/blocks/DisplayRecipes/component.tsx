@@ -82,7 +82,7 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
         {title && (
           <h2
             className={cn(
-              'text-3xl text-brown font-anton uppercase font-bold',
+              'text-3xl text-darkBrown font-anton uppercase font-bold',
               'order-1 md:order-1',
               hasButton ? 'md:col-span-8' : 'md:col-span-12',
             )}

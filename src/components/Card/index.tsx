@@ -61,7 +61,7 @@ export const Card: React.FC<{
         />
 
         {showCategories && (hasCategories || servings) && (
-          <ul className="absolute bottom-2 left-2 text-sm flex gap-2 z-10 text-brown font-anton uppercase">
+          <ul className="absolute bottom-2 left-2 text-sm flex gap-2 z-10 text-darkBrown font-anton uppercase">
             {categories?.map((category, index) => {
               if (typeof category === 'object') {
                 const title = category.title || 'Untitled category'

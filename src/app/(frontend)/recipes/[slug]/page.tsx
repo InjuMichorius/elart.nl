@@ -62,8 +62,8 @@ export default async function Recipe({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RecipeHero recipe={recipe} />
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
+      <div className="gap-4 pt-24">
+        <div className="container flex flex-col md:flex-row gap-6">
           <IngredientList
             recipe={{
               ...recipe,
@@ -80,7 +80,7 @@ export default async function Recipe({ params: paramsPromise }: Args) {
                 })) ?? [],
             }}
           />
-          <RichText className="max-w-[48rem] mx-auto" data={recipe.content} enableGutter={false} />
+          <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
           {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
             <RelatedRecipes
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"

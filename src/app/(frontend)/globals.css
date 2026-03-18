@@ -66,11 +66,11 @@
     --warning: 34 89% 85%;
     --error: 10 100% 86%;
 
-    --color-beige: #FFF7E6;
-    --color-beige-dark: #FBE7B9;
-    --color-brown: #3C2F2F;
-    --color-dark-brown: #1D1611;
-    --color-green: #2D5A27;
+    --color-beige: #fff7e6;
+    --color-beige-dark: #fbe7b9;
+    --color-brown: #3c2f2f;
+    --color-dark-brown: #1d1611;
+    --color-green: #2d5a27;
   }
 
   [data-theme='dark'] {
@@ -128,4 +128,14 @@ html[data-theme='light'] {
 
 body {
   background-color: var(--color-beige);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

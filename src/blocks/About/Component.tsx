@@ -12,7 +12,7 @@ export const AboutBlock: React.FC<Props> = ({ title, text, images }) => {
   const hasImages = images && images.length > 0
 
   return (
-    <div className="pt-3 pb-3 bg-beige text-brown">
+    <div className="pt-3 pb-3 bg-beige text-darkBrown">
       <div className="container mx-auto py-12 lg:py-24 flex flex-col-reverse lg:flex-row items-center place-content-between gap-[3rem]">
         <div>
           <h2 className="text-3xl font-anton uppercase mb-4">{title}</h2>
