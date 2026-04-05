@@ -19,19 +19,19 @@ export const RecipeHero: React.FC<{
     <div className="relative -mt-[10.4rem] flex items-end">
       <div className="container z-10 relative lg:grid text-white pb-8">
         <div className="max-w-[48rem]">
-          <div className="uppercase text-sm mb-6">
+          <div className="flex gap-3 text-sm mb-4">
             {categories?.map((category, index) => {
               if (typeof category === 'object' && category !== null) {
                 const { title: categoryTitle } = category
 
                 const titleToUse = categoryTitle || 'Untitled category'
 
-                const isLast = index === categories.length - 1
-
                 return (
-                  <div className="bg-green" key={index}>
+                  <div
+                    className="w-[fit-content] bg-beige py-1 px-3 font-anton uppercase text-darkBrown rounded-lg"
+                    key={index}
+                  >
                     {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
                   </div>
                 )
               }
@@ -40,10 +40,12 @@ export const RecipeHero: React.FC<{
           </div>
 
           <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
+            <h1 className="mb-4 text-3xl md:text-5xl lg:text-6xl font-anton uppercase text-beige">
+              {title}
+            </h1>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-16  text-beige">
             {hasAuthors && (
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
@@ -54,9 +56,7 @@ export const RecipeHero: React.FC<{
               </div>
             )}
             {publishedAt && (
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
-
+              <div className="flex flex-col gap-1 text-sm">
                 <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
               </div>
             )}

@@ -56,13 +56,12 @@ export default async function Recipe({ params: paramsPromise }: Args) {
 
   return (
     <article className="pt-16 pb-16">
-      1
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RecipeHero recipe={recipe} />
-      <div className="gap-4 pt-24">
+      <div className="gap-4 pt-6 lg:pt-24">
         <div className="container flex flex-col md:flex-row gap-6">
           <RecipeSidebar
             defaultServings={recipe.servings}

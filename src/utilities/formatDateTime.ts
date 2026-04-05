@@ -1,3 +1,18 @@
+const DUTCH_MONTHS = [
+  'januari',
+  'februari',
+  'maart',
+  'april',
+  'mei',
+  'juni',
+  'juli',
+  'augustus',
+  'september',
+  'oktober',
+  'november',
+  'december',
+]
+
 export const formatDateTime = (timestamp: string): string => {
   const now = new Date()
   let date = now
@@ -8,7 +23,7 @@ export const formatDateTime = (timestamp: string): string => {
   // const minutes = date.getMinutes();
   // const seconds = date.getSeconds();
 
-  const MM = months + 1 < 10 ? `0${months + 1}` : months + 1
+  const MM = DUTCH_MONTHS[months]
   const DD = days < 10 ? `0${days}` : days
   const YYYY = date.getFullYear()
   // const AMPM = hours < 12 ? 'AM' : 'PM';
@@ -16,5 +31,5 @@ export const formatDateTime = (timestamp: string): string => {
   // const MinMin = (minutes < 10) ? `0${minutes}` : minutes;
   // const SS = (seconds < 10) ? `0${seconds}` : seconds;
 
-  return `${MM}/${DD}/${YYYY}`
+  return `${DD} ${MM} ${YYYY}`
 }
