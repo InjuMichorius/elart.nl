@@ -8,7 +8,6 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 import RecipeSidebar from '@/components/RecipeSidebar'
-import { StepGroupList } from '@/blocks/Stappen/Component'
 
 import type { Recipe } from '@/payload-types'
 
@@ -81,16 +80,13 @@ export default async function Recipe({ params: paramsPromise }: Args) {
           />
           <div>
             <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
-            {recipe.stepGroups && recipe.stepGroups.length > 0 && (
-              <StepGroupList groups={recipe.stepGroups} className="max-w-[48rem]" />
+            {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
+              <RelatedRecipes
+                className="mt-8 lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
+                docs={recipe.relatedRecipes.filter(isRecipe)}
+              />
             )}
           </div>
-          {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
-            <RelatedRecipes
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={recipe.relatedRecipes.filter(isRecipe)}
-            />
-          )}
         </div>
       </div>
     </article>

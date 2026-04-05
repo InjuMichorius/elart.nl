@@ -14,7 +14,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { stepGroupsField } from '../../blocks/Stappen/config'
+import { Stappen } from '../../blocks/Stappen/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidateRecipe } from './hooks/revalidateRecipe'
@@ -94,7 +94,7 @@ export const Recipes: CollectionConfig<'recipes'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, Stappen] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
@@ -104,7 +104,6 @@ export const Recipes: CollectionConfig<'recipes'> = {
               label: false,
               required: true,
             },
-            stepGroupsField,
           ],
           label: 'Content',
         },

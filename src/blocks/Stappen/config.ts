@@ -9,62 +9,26 @@ export const Stappen: Block = {
   },
   fields: [
     {
-      name: 'groups',
+      name: 'title',
+      type: 'text',
+      label: 'Titel (optioneel)',
+    },
+    {
+      name: 'steps',
       type: 'array',
-      label: 'Stappen groepen',
+      label: 'Stappen',
       minRows: 1,
       fields: [
         {
           name: 'title',
           type: 'text',
           label: 'Titel',
+          required: true,
         },
-        {
-          name: 'steps',
-          type: 'array',
-          label: 'Stappen',
-          minRows: 1,
-          fields: [
-            {
-              name: 'text',
-              type: 'textarea',
-              label: 'Stap',
-              required: true,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-}
-
-/**
- * Shared field definition for embedding step groups directly on a recipe
- * (outside the page-builder blocks system).
- */
-export const stepGroupsField = {
-  name: 'stepGroups',
-  type: 'array' as const,
-  label: 'Stappen',
-  admin: {
-    description: 'Voeg één of meerdere stappenlijsten toe (bijv. brood en boter apart).',
-  },
-  fields: [
-    {
-      name: 'title',
-      type: 'text' as const,
-      label: 'Titel (optioneel)',
-    },
-    {
-      name: 'steps',
-      type: 'array' as const,
-      label: 'Stappen',
-      minRows: 1,
-      fields: [
         {
           name: 'text',
-          type: 'textarea' as const,
-          label: 'Stap',
+          type: 'textarea',
+          label: 'Tekst',
           required: true,
         },
       ],

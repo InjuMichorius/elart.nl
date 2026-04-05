@@ -247,21 +247,6 @@ export interface Recipe {
     };
     [k: string]: unknown;
   };
-  /**
-   * Voeg één of meerdere stappenlijsten toe (bijv. brood en boter apart).
-   */
-  stepGroups?:
-    | {
-        title?: string | null;
-        steps?:
-          | {
-              text: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
   relatedRecipes?: (string | Recipe)[] | null;
   categories?: (string | Category)[] | null;
   servings: number;
@@ -853,15 +838,11 @@ export interface DisplayRecipesBlock {
  * via the `definition` "StappenBlock".
  */
 export interface StappenBlock {
-  groups?:
+  title?: string | null;
+  steps?:
     | {
-        title?: string | null;
-        steps?:
-          | {
-              text: string;
-              id?: string | null;
-            }[]
-          | null;
+        title: string;
+        text: string;
         id?: string | null;
       }[]
     | null;
@@ -1342,16 +1323,12 @@ export interface DisplayRecipesBlockSelect<T extends boolean = true> {
  * via the `definition` "StappenBlock_select".
  */
 export interface StappenBlockSelect<T extends boolean = true> {
-  groups?:
+  title?: T;
+  steps?:
     | T
     | {
         title?: T;
-        steps?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
+        text?: T;
         id?: T;
       };
   id?: T;
@@ -1365,18 +1342,6 @@ export interface RecipesSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
-  stepGroups?:
-    | T
-    | {
-        title?: T;
-        steps?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   relatedRecipes?: T;
   categories?: T;
   servings?: T;

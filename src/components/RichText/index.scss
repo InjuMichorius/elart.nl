@@ -1,5 +1,28 @@
 hr {
-    margin: 1.5rem 0;
-    border-bottom: 2px solid var(--color-dark-brown);
-    border-radius: 999;
+  margin: 1.5rem 0;
+  border-bottom: 2px solid var(--color-dark-brown);
+  border-radius: 999;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-anton);
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+}
+
+strong, strong p {
+  font-weight: 700;
 }

@@ -17,15 +17,23 @@ export const RelatedRecipes: React.FC<RelatedRecipesProps> = (props) => {
   const { className, docs, introContent } = props
 
   return (
-    <div className={clsx('lg:container', className)}>
-      <h3 className="text-3xl font-bold mb-3">Gerelateerde recepten</h3>
+    <div className={clsx(className)}>
+      <h3 className="text-2xl font-bold mb-3">Gerelateerde recepten</h3>
       {introContent && <RichText data={introContent} enableGutter={false} />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-stretch">
         {docs?.map((doc, index) => {
           if (typeof doc === 'string') return null
 
-          return <Card key={index} doc={doc} relationTo="recipes" showCategories />
+          return (
+            <Card
+              className="bg-beigeDark"
+              key={index}
+              doc={doc}
+              relationTo="recipes"
+              showCategories
+            />
+          )
         })}
       </div>
     </div>
