@@ -207,6 +207,7 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | DisplayRecipesBlock
+    | StappenBlock
   )[];
   meta?: {
     title?: string | null;
@@ -246,6 +247,21 @@ export interface Recipe {
     };
     [k: string]: unknown;
   };
+  /**
+   * Voeg één of meerdere stappenlijsten toe (bijv. brood en boter apart).
+   */
+  stepGroups?:
+    | {
+        title?: string | null;
+        steps?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   relatedRecipes?: (string | Recipe)[] | null;
   categories?: (string | Category)[] | null;
   servings: number;
@@ -834,6 +850,27 @@ export interface DisplayRecipesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StappenBlock".
+ */
+export interface StappenBlock {
+  groups?:
+    | {
+        title?: string | null;
+        steps?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stappen';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1144,6 +1181,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         displayRecipes?: T | DisplayRecipesBlockSelect<T>;
+        stappen?: T | StappenBlockSelect<T>;
       };
   meta?:
     | T
@@ -1301,12 +1339,44 @@ export interface DisplayRecipesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StappenBlock_select".
+ */
+export interface StappenBlockSelect<T extends boolean = true> {
+  groups?:
+    | T
+    | {
+        title?: T;
+        steps?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "recipes_select".
  */
 export interface RecipesSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
+  stepGroups?:
+    | T
+    | {
+        title?: T;
+        steps?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   relatedRecipes?: T;
   categories?: T;
   servings?: T;

@@ -8,6 +8,7 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 import RecipeSidebar from '@/components/RecipeSidebar'
+import { StepGroupList } from '@/blocks/Stappen/Component'
 
 import type { Recipe } from '@/payload-types'
 
@@ -57,7 +58,6 @@ export default async function Recipe({ params: paramsPromise }: Args) {
   return (
     <article className="pt-16 pb-16">
       <PageClient />
-      {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RecipeHero recipe={recipe} />
@@ -79,7 +79,12 @@ export default async function Recipe({ params: paramsPromise }: Args) {
             }
             nutrition={recipe.nutrition}
           />
-          <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
+          <div>
+            <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
+            {recipe.stepGroups && recipe.stepGroups.length > 0 && (
+              <StepGroupList groups={recipe.stepGroups} className="max-w-[48rem]" />
+            )}
+          </div>
           {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
             <RelatedRecipes
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"

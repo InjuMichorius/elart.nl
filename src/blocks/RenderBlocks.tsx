@@ -10,6 +10,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { DisplayRecipesBlock } from '@/blocks/DisplayRecipes/component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { StappenBlock } from '@/blocks/Stappen/Component'
 
 const blockComponents = {
   about: AboutBlock,
@@ -20,6 +21,7 @@ const blockComponents = {
   displayRecipes: DisplayRecipesBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  stappen: StappenBlock,
 }
 
 export const RenderBlocks: React.FC<{

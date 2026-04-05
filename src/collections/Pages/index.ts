@@ -9,6 +9,7 @@ import { CategoryDisplay } from '../../blocks/CategoryDisplay/config'
 import { Content } from '../../blocks/Content/config'
 import { DisplayRecipes } from '../../blocks/DisplayRecipes/config'
 import { FormBlock } from '../../blocks/Form/config'
+import { Stappen } from '../../blocks/Stappen/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -87,6 +88,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Archive,
                 FormBlock,
                 DisplayRecipes,
+                Stappen,
               ],
               required: true,
               admin: {
