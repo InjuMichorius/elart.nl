@@ -1,6 +1,6 @@
 'use client'
-import { useState } from 'react'
 import { cn } from '@/utilities/ui'
+import { useState } from 'react'
 
 interface IngredientItem {
   ingredient: { title: string } | null
@@ -8,41 +8,46 @@ interface IngredientItem {
   unit?: string
 }
 
-interface RecipeType {
-  servings: number
+interface Props {
   ingredientsList: IngredientItem[]
+  servings: number
+  defaultServings: number
+  onIncrease: () => void
+  onDecrease: () => void
 }
 
-export default function Recipe({ recipe }: { recipe: RecipeType }) {
-  const [servings, setServings] = useState<number>(recipe.servings || 1)
+export default function IngredientList({
+  ingredientsList,
+  servings,
+  defaultServings,
+  onIncrease,
+  onDecrease,
+}: Props) {
   const [checked, setChecked] = useState<Record<number, boolean>>({})
-
-  const handleIncrease = () => setServings((prev: number) => prev + 1)
-  const handleDecrease = () => setServings((prev: number) => Math.max(1, prev - 1)) // min 1 persoon
 
   const toggleChecked = (index: number) => {
     setChecked((prev) => ({ ...prev, [index]: !prev[index] }))
   }
 
   return (
-    <div className="min-w-[300px]">
-      <h2 className="text-xl font-bold mb-4">Ingrediënten</h2>
-      <div className="flex items-center gap-4 mb-4">
-        <button onClick={handleDecrease} className="px-3 py-1 bg-gray-200 rounded">
+    <div className="h-[fit-content] bg-beigeDark p-6 rounded-xl">
+      <h2 className="text-xl font-anton uppercase mb-4">Ingrediënten</h2>
+      <div className="flex items-center gap-4 mb-4 font-bold">
+        <button onClick={onDecrease} className="px-3 py-1 bg-green text-white rounded">
           -
         </button>
         <span>
           {servings} {servings === 1 ? 'persoon' : 'personen'}
         </span>
-        <button onClick={handleIncrease} className="px-3 py-1 bg-gray-200 rounded">
+        <button onClick={onIncrease} className="px-3 py-1 bg-green text-white rounded">
           +
         </button>
       </div>
 
       <ul className="space-y-1">
-        {recipe.ingredientsList.map((item, index) => {
+        {ingredientsList.map((item, index) => {
           const ingredient = item.ingredient?.title ?? 'Onbekend ingrediënt'
-          const adjustedAmount = ((item.amount || 0) * servings) / (recipe.servings || 1)
+          const adjustedAmount = ((item.amount || 0) * servings) / (defaultServings || 1)
           const isChecked = !!checked[index]
 
           return (
@@ -52,7 +57,7 @@ export default function Recipe({ recipe }: { recipe: RecipeType }) {
                   type="checkbox"
                   checked={isChecked}
                   onChange={() => toggleChecked(index)}
-                  className="size-4 accent-darkBrown shrink-0"
+                  className="size-4 accent-green shrink-0"
                 />
                 <span className={cn(isChecked && 'line-through opacity-50')}>
                   {adjustedAmount} {item.unit} {ingredient}

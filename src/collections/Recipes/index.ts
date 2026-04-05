@@ -164,6 +164,52 @@ export const Recipes: CollectionConfig<'recipes'> = {
                 },
               ],
             },
+            {
+              name: 'nutrition',
+              type: 'group',
+              label: 'Nutritional Values (per serving)',
+              admin: {
+                description:
+                  'All fields must be filled in for the nutrition table to appear on the recipe page.',
+              },
+              fields: [
+                {
+                  name: 'energyKcal',
+                  type: 'number',
+                  label: 'Energie (kcal)',
+                },
+                {
+                  name: 'fat',
+                  type: 'number',
+                  label: 'Vetten (g)',
+                },
+                {
+                  name: 'saturatedFat',
+                  type: 'number',
+                  label: 'waarvan verzadigd (g)',
+                },
+                {
+                  name: 'carbohydrates',
+                  type: 'number',
+                  label: 'Koolhydraten (g)',
+                },
+                {
+                  name: 'sugars',
+                  type: 'number',
+                  label: 'waarvan suikers (g)',
+                },
+                {
+                  name: 'protein',
+                  type: 'number',
+                  label: 'Eiwitten (g)',
+                },
+                {
+                  name: 'salt',
+                  type: 'number',
+                  label: 'Zout (g)',
+                },
+              ],
+            },
           ],
           label: 'Meta',
         },

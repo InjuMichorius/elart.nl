@@ -7,7 +7,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
-import IngredientList from '@/components/IngredientList'
+import RecipeSidebar from '@/components/RecipeSidebar'
 
 import type { Recipe } from '@/payload-types'
 
@@ -64,21 +64,21 @@ export default async function Recipe({ params: paramsPromise }: Args) {
       <RecipeHero recipe={recipe} />
       <div className="gap-4 pt-24">
         <div className="container flex flex-col md:flex-row gap-6">
-          <IngredientList
-            recipe={{
-              ...recipe,
-              ingredientsList:
-                recipe.ingredientsList?.map((item) => ({
-                  amount: item.amount,
-                  ingredient:
-                    typeof item.ingredient === 'string'
-                      ? { title: item.ingredient }
-                      : item.ingredient
-                        ? { title: item.ingredient.title }
-                        : null,
-                  unit: item.unit ?? undefined,
-                })) ?? [],
-            }}
+          <RecipeSidebar
+            defaultServings={recipe.servings}
+            ingredientsList={
+              recipe.ingredientsList?.map((item) => ({
+                amount: item.amount,
+                ingredient:
+                  typeof item.ingredient === 'string'
+                    ? { title: item.ingredient }
+                    : item.ingredient
+                      ? { title: item.ingredient.title }
+                      : null,
+                unit: item.unit ?? undefined,
+              })) ?? []
+            }
+            nutrition={recipe.nutrition}
           />
           <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
           {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (

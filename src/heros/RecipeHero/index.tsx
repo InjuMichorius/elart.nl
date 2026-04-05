@@ -29,10 +29,10 @@ export const RecipeHero: React.FC<{
                 const isLast = index === categories.length - 1
 
                 return (
-                  <React.Fragment key={index}>
+                  <div className="bg-green" key={index}>
                     {titleToUse}
                     {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
+                  </div>
                 )
               }
               return null

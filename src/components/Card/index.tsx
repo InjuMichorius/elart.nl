@@ -16,13 +16,12 @@ export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   doc?: CardRecipeData
-  isActive?: boolean
   relationTo?: 'recipes'
   showCategories?: boolean
   title?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, isActive, relationTo, showCategories, title: titleFromProps } = props
+  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
   const { slug, categories, meta, title, servings } = doc || {}
   const { description, image: metaImage } = meta || {}
@@ -37,7 +36,6 @@ export const Card: React.FC<{
       tabIndex={0}
       className={cn(
         'bg-beige rounded-2xl overflow-hidden h-fit md:hover:bg-green md:hover:cursor-pointer md:hover:-translate-y-2 group relative transition-all duration-500',
-        isActive && 'bg-green -translate-y-2',
         className,
       )}
       ref={card.ref as React.Ref<HTMLElement>}
@@ -49,14 +47,12 @@ export const Card: React.FC<{
             resource={metaImage}
             imgClassName={cn(
               'w-full h-full object-cover aspect-[4/2] transition-transform duration-500 md:group-hover:scale-105',
-              isActive && 'scale-105',
             )}
           />
         )}
         <div
           className={cn(
             'absolute inset-0 bg-black/0 transition-colors duration-500 md:group-hover:bg-black/20',
-            isActive && 'bg-black/20',
           )}
         />
 
@@ -74,8 +70,6 @@ export const Card: React.FC<{
                       'xl:translate-y-4 xl:opacity-0 xl:[transition-delay:0ms]',
                       'xl:group-hover:translate-y-0 xl:group-hover:opacity-100 xl:group-hover:[transition-delay:var(--delay)]',
                       'xl:group-focus-visible:translate-y-0 xl:group-focus-visible:opacity-100 xl:group-focus-visible:[transition-delay:var(--delay)]',
-                      isActive &&
-                        'xl:translate-y-0 xl:opacity-100 xl:[transition-delay:var(--delay)]',
                     )}
                   >
                     {title}
@@ -93,7 +87,6 @@ export const Card: React.FC<{
                   'xl:translate-y-4 xl:opacity-0 xl:[transition-delay:0ms]',
                   'xl:group-hover:translate-y-0 xl:group-hover:opacity-100 xl:group-hover:[transition-delay:var(--delay)]',
                   'xl:group-focus-visible:translate-y-0 xl:group-focus-visible:opacity-100 xl:group-focus-visible:[transition-delay:var(--delay)]',
-                  isActive && 'xl:translate-y-0 xl:opacity-100 xl:[transition-delay:var(--delay)]',
                 )}
               >
                 {servings} porties
@@ -102,12 +95,7 @@ export const Card: React.FC<{
           </ul>
         )}
       </div>
-      <div
-        className={cn(
-          'p-4 md:group-hover:text-beige transition-all duration-500',
-          isActive && 'text-beige',
-        )}
-      >
+      <div className={cn('p-4 md:group-hover:text-beige transition-all duration-500')}>
         {titleToUse && (
           <h3 className="line-clamp-2 text-xl/6 font-anton font-bold uppercase">{titleToUse}</h3>
         )}

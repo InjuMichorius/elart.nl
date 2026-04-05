@@ -257,6 +257,18 @@ export interface Recipe {
         id?: string | null;
       }[]
     | null;
+  /**
+   * All fields must be filled in for the nutrition table to appear on the recipe page.
+   */
+  nutrition?: {
+    energyKcal?: number | null;
+    fat?: number | null;
+    saturatedFat?: number | null;
+    carbohydrates?: number | null;
+    sugars?: number | null;
+    protein?: number | null;
+    salt?: number | null;
+  };
   meta?: {
     title?: string | null;
     /**
@@ -1305,6 +1317,17 @@ export interface RecipesSelect<T extends boolean = true> {
         amount?: T;
         unit?: T;
         id?: T;
+      };
+  nutrition?:
+    | T
+    | {
+        energyKcal?: T;
+        fat?: T;
+        saturatedFat?: T;
+        carbohydrates?: T;
+        sugars?: T;
+        protein?: T;
+        salt?: T;
       };
   meta?:
     | T

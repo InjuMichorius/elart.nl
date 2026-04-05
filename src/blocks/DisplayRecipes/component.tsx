@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+
 import type { DisplayRecipesBlock as DisplayRecipesBlockProps } from '@/payload-types'
 import { Card } from '@/components/Card'
 import { CMSLink } from '@/components/Link'
@@ -14,9 +15,6 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
   const hasButton = !!(button && button.length > 0 && button[0]?.link)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
-  const visibleCards = useRef<Set<number>>(new Set())
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,46 +33,6 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
 
     return () => observer.disconnect()
   }, [])
-
-  // Activate the card closest to the vertical center of the viewport,
-  // but only on devices that don't support hover (touch screens).
-  useEffect(() => {
-    const supportsHover = window.matchMedia('(hover: hover)').matches
-    if (supportsHover) return
-
-    const observers: IntersectionObserver[] = []
-
-    cardRefs.current.forEach((el, index) => {
-      if (!el) return
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry?.isIntersecting) {
-            visibleCards.current.add(index)
-            // Activate the card with the highest index currently in the zone
-            // (last entered = most centered when scrolling either direction)
-            const max = Math.max(...visibleCards.current)
-            setActiveIndex(max)
-          } else {
-            visibleCards.current.delete(index)
-            if (visibleCards.current.size === 0) {
-              setActiveIndex(null)
-            } else {
-              const max = Math.max(...visibleCards.current)
-              setActiveIndex(max)
-            }
-          }
-        },
-        {
-          rootMargin: '-35% 0px -35% 0px',
-          threshold: 0,
-        },
-      )
-      observer.observe(el)
-      observers.push(observer)
-    })
-
-    return () => observers.forEach((o) => o.disconnect())
-  }, [recipes])
 
   return (
     <div className={cn('py-12 lg:py-24 bg-beigeDark', className)} ref={containerRef}>
@@ -108,21 +66,13 @@ export const DisplayRecipesBlock: React.FC<Props> = ({ className, title, button,
                 return (
                   <div
                     key={index}
-                    ref={(el) => {
-                      cardRefs.current[index] = el
-                    }}
                     style={{
                       opacity: isVisible ? 1 : 0,
                       transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
                       transition: `opacity 0.5s ease-out ${index * 0.1}s, transform 0.5s ease-out ${index * 0.1}s`,
                     }}
                   >
-                    <Card
-                      doc={recipe.recipe}
-                      relationTo="recipes"
-                      showCategories={true}
-                      isActive={activeIndex === index}
-                    />
+                    <Card doc={recipe.recipe} relationTo="recipes" showCategories={true} />
                   </div>
                 )
               }
