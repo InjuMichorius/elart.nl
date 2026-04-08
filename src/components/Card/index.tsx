@@ -6,6 +6,7 @@ import React from 'react'
 
 import type { Recipe } from '@/payload-types'
 
+import { FavoriteButton } from '@/components/FavoriteButton'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 
 export type CardRecipeData = Pick<Recipe, 'slug' | 'categories' | 'meta' | 'title'> & {
@@ -55,6 +56,8 @@ export const Card: React.FC<{
             'absolute inset-0 bg-black/0 transition-colors duration-500 md:group-hover:bg-black/20',
           )}
         />
+
+        {doc && <FavoriteButton recipe={doc} />}
 
         {showCategories && (hasCategories || servings) && (
           <ul className="absolute bottom-2 left-2 text-sm flex gap-2 z-10 text-darkBrown font-anton uppercase">

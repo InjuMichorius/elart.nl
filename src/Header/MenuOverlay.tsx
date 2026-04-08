@@ -6,6 +6,7 @@ import { SearchIcon } from 'lucide-react'
 
 import type { Header as HeaderType } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
+import { useFavorites } from '@/hooks/useFavorites'
 
 interface MenuOverlayProps {
   data: HeaderType
@@ -15,6 +16,8 @@ interface MenuOverlayProps {
 
 export const MenuOverlay: React.FC<MenuOverlayProps> = ({ data, isOpen, onClose }) => {
   const navItems = data?.navItems || []
+  const { favorites, hydrated } = useFavorites()
+  const count = hydrated ? favorites.length : 0
 
   return (
     <div
@@ -39,6 +42,20 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ data, isOpen, onClose 
           appearance="inline"
           className="text-4xl font-anton tracking-wide text-darkBrown uppercase"
         />
+        <div className="relative inline-flex items-center">
+          <CMSLink
+            type="custom"
+            url="/favorieten"
+            label="Favorieten"
+            appearance="inline"
+            className="text-4xl font-anton tracking-wide text-darkBrown uppercase"
+          />
+          {count > 0 && (
+            <span className="ml-2 w-8 h-8 px-1.5 rounded-full bg-green text-beige text-lg font-bold flex items-center justify-center leading-none">
+              {count}
+            </span>
+          )}
+        </div>
         {navItems.map(({ link }, i) => (
           <CMSLink
             key={i}
@@ -50,9 +67,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ data, isOpen, onClose 
         <Link
           href="/search"
           onClick={onClose}
-          className="mt-4 flex items-center gap-2 text-lg font-anton text-darkBrown uppercase"
+          className="mt-4 flex items-center gap-2 text-4xl font-anton text-darkBrown uppercase"
         >
-          <SearchIcon className="w-5" />
+          <SearchIcon className="w-16" />
           <span>Zoeken</span>
         </Link>
       </nav>

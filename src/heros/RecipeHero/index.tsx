@@ -5,12 +5,14 @@ import Image from 'next/image'
 import type { Recipe } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { RecipeFavoriteButton } from '@/components/RecipeFavoriteButton'
 import { formatAuthors } from '@/utilities/formatAuthors'
 
 export const RecipeHero: React.FC<{
   recipe: Recipe
 }> = ({ recipe }) => {
-  const { categories, heroImage, populatedAuthors, publishedAt, title } = recipe
+  const { categories, heroImage, populatedAuthors, publishedAt, title, slug, meta, servings } =
+    recipe
 
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
@@ -43,6 +45,10 @@ export const RecipeHero: React.FC<{
             <h1 className="mb-4 text-3xl md:text-5xl lg:text-6xl font-anton uppercase text-beige">
               {title}
             </h1>
+          </div>
+
+          <div className="mb-4">
+            <RecipeFavoriteButton recipe={{ slug, categories, meta, title, servings }} />
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 md:gap-16  text-beige">

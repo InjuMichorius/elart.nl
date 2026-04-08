@@ -31,10 +31,8 @@ export default async function Page() {
   return (
     <div className="pt-24 pb-24 bg-beigeDark">
       <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>Alle recepten</h1>
-        </div>
+      <div className="container mb-10">
+        <h1 className="font-anton text-4xl">Alle recepten</h1>
       </div>
       <div className="container mb-8">
         <PageRange
