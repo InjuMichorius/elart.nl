@@ -3,23 +3,25 @@ import type { Metadata } from 'next/types'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import { CardRecipeData } from '@/components/Card'
+
+export const revalidate = 600
 
 type Args = {
   searchParams: Promise<{
     q: string
   }>
 }
-export default async function Page({ searchParams: searchParamsPromise }: Args) {
-  const { q: query } = await searchParamsPromise
+
+const querySearch = cache(async (query: string) => {
   const payload = await getPayload({ config: configPromise })
 
-  const recipes = await payload.find({
+  return payload.find({
     collection: 'search',
-    depth: 1,
+    depth: 0,
     limit: 12,
     select: {
       title: true,
@@ -27,7 +29,6 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       categories: true,
       meta: true,
     },
-    // pagination: false reduces overhead if you don't need totalDocs
     pagination: false,
     ...(query
       ? {
@@ -58,6 +59,11 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         }
       : {}),
   })
+})
+
+export default async function Page({ searchParams: searchParamsPromise }: Args) {
+  const { q: query } = await searchParamsPromise
+  const recipes = await querySearch(query)
 
   return (
     <div className="pt-24 pb-24">

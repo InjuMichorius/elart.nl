@@ -71,7 +71,8 @@ export default function IngredientList({
           <ul className="space-y-1">
             {ingredientsList.map((item, index) => {
               const ingredient = item.ingredient?.title ?? 'Onbekend ingrediënt'
-              const adjustedAmount = ((item.amount || 0) * servings) / (defaultServings || 1)
+              const adjustedAmount =
+                Math.round((((item.amount || 0) * servings) / (defaultServings || 1)) * 100) / 100
               const isChecked = !!checked[index]
 
               return (

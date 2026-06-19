@@ -1,6 +1,6 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
-import React from 'react'
+import React, { cache } from 'react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { Instagram, Music2, Youtube, Facebook, PinIcon, Twitter, Mail } from 'lucide-react'
@@ -18,16 +18,20 @@ const socialIcons: Record<string, React.ReactNode> = {
   twitter: <Twitter className="w-5 h-5" />,
 }
 
-export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
-  const { tagline, email, socialLinks, navItems } = footerData
-
+const queryCategories = cache(async () => {
   const payload = await getPayload({ config: configPromise })
-  const categoriesResult = await payload.find({
+  return payload.find({
     collection: 'categories',
     limit: 12,
     sort: 'title',
   })
+})
+
+export async function Footer() {
+  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const { tagline, email, socialLinks, navItems } = footerData
+
+  const categoriesResult = await queryCategories()
   const categories = categoriesResult.docs
 
   return (

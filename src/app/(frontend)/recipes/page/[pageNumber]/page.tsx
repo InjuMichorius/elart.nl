@@ -5,7 +5,7 @@ import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
 
@@ -17,21 +17,32 @@ type Args = {
   }>
 }
 
+const queryRecipes = cache(async (page: number) => {
+  const payload = await getPayload({ config: configPromise })
+
+  return payload.find({
+    collection: 'recipes',
+    depth: 0,
+    limit: 12,
+    page,
+    overrideAccess: false,
+    select: {
+      title: true,
+      slug: true,
+      categories: true,
+      meta: true,
+    },
+  })
+})
+
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
 
   const sanitizedPageNumber = Number(pageNumber)
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const recipes = await payload.find({
-    collection: 'recipes',
-    depth: 1,
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+  const recipes = await queryRecipes(sanitizedPageNumber)
 
   return (
     <div className="pt-24 pb-24">
@@ -76,7 +87,7 @@ export async function generateStaticParams() {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / 12)
 
   const pages: { pageNumber: string }[] = []
 

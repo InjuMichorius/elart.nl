@@ -1,37 +1,33 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
+import React, { cache } from 'react'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 
-export default async function CategoryPage({
-  params: paramsPromise,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await paramsPromise
+export const revalidate = 600
 
+const queryCategoryBySlug = cache(async (slug: string) => {
   const payload = await getPayload({ config: configPromise })
 
-  // Find the category by slug
-  const categoryResult = await payload.find({
+  return payload.find({
     collection: 'categories',
     where: { slug: { equals: slug } },
     limit: 1,
   })
+})
 
-  const category = categoryResult.docs[0]
-  if (!category) return notFound()
+const queryRecipesByCategory = cache(async (categoryId: string) => {
+  const payload = await getPayload({ config: configPromise })
 
-  // Find recipes that reference this category
-  const recipesResult = await payload.find({
+  return payload.find({
     collection: 'recipes',
     where: {
-      categories: { equals: category.id },
+      categories: { equals: categoryId },
     },
-    limit: 12, // match the recipes page limit
-    depth: 2,
+    limit: 12,
+    depth: 0,
     select: {
       title: true,
       slug: true,
@@ -40,6 +36,21 @@ export default async function CategoryPage({
       servings: true,
     },
   })
+})
+
+export default async function CategoryPage({
+  params: paramsPromise,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await paramsPromise
+
+  const categoryResult = await queryCategoryBySlug(slug)
+
+  const category = categoryResult.docs[0]
+  if (!category) return notFound()
+
+  const recipesResult = await queryRecipesByCategory(category.id)
 
   return (
     <div className="pt-24 pb-24">
@@ -69,4 +80,14 @@ export default async function CategoryPage({
       </div>
     </div>
   )
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const categories = await payload.find({
+    collection: 'categories',
+    limit: 100,
+    select: { slug: true },
+  })
+  return categories.docs.map(({ slug }) => ({ slug }))
 }

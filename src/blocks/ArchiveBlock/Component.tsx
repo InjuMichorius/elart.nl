@@ -2,10 +2,31 @@ import type { Recipe, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+
+const queryRecipes = cache(
+  async (limit: number, flattenedCategories: (string | undefined)[] | undefined) => {
+    const payload = await getPayload({ config: configPromise })
+
+    return payload.find({
+      collection: 'recipes',
+      depth: 0,
+      limit,
+      ...(flattenedCategories && flattenedCategories.length > 0
+        ? {
+            where: {
+              categories: {
+                in: flattenedCategories,
+              },
+            },
+          }
+        : {}),
+    })
+  },
+)
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -19,27 +40,12 @@ export const ArchiveBlock: React.FC<
   let recipes: Recipe[] = []
 
   if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
-
     const flattenedCategories = categories?.map((category) => {
       if (typeof category === 'object') return category.id
       else return category
     })
 
-    const fetchedRecipes = await payload.find({
-      collection: 'recipes',
-      depth: 1,
-      limit,
-      ...(flattenedCategories && flattenedCategories.length > 0
-        ? {
-            where: {
-              categories: {
-                in: flattenedCategories,
-              },
-            },
-          }
-        : {}),
-    })
+    const fetchedRecipes = await queryRecipes(limit, flattenedCategories)
 
     recipes = fetchedRecipes.docs
   } else {

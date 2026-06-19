@@ -5,18 +5,18 @@ import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import PageClient from './page.client'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export default async function Page() {
+const queryRecipes = cache(async () => {
   const payload = await getPayload({ config: configPromise })
 
-  const recipes = await payload.find({
+  return payload.find({
     collection: 'recipes',
-    depth: 2,
+    depth: 0,
     limit: 12,
     // @ts-expect-error: Payload types don't support string[] for populate yet
     populate: ['meta.image'],
@@ -27,6 +27,10 @@ export default async function Page() {
       meta: true,
     },
   })
+})
+
+export default async function Page() {
+  const recipes = await queryRecipes()
 
   return (
     <div className="pt-24 pb-24 bg-beigeDark">
