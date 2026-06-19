@@ -12,8 +12,11 @@ export type CardRecipeData = Pick<Recipe, 'slug' | 'categories' | 'meta' | 'titl
   servings?: number
 }
 
+export type CardBgColor = 'beige' | 'beigeDark'
+
 export const Card: React.FC<{
   alignItems?: 'center'
+  bgColor?: CardBgColor
   className?: string
   doc?: CardRecipeData
   isActive?: boolean
@@ -22,7 +25,15 @@ export const Card: React.FC<{
   title?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, isActive, relationTo, showCategories, title: titleFromProps } = props
+  const {
+    bgColor = 'beige',
+    className,
+    doc,
+    isActive,
+    relationTo,
+    showCategories,
+    title: titleFromProps,
+  } = props
 
   const { slug, categories, meta, title, servings } = doc || {}
   const { description, image: metaImage } = meta || {}
@@ -32,12 +43,18 @@ export const Card: React.FC<{
   const sanitizedDescription = description?.replace(/\s/g, ' ')
   const href = `/${relationTo}/${slug}`
 
+  const isDarkBg = bgColor === 'beigeDark'
+  const bgClass = isDarkBg ? 'bg-beigeDark' : 'bg-beige'
+  const contentBgClass = isDarkBg
+    ? 'md:group-hover:bg-beigeDark md:hover:cursor-pointer'
+    : 'md:group-hover:bg-beige md:hover:cursor-pointer'
+
   return (
     <article
       tabIndex={0}
       className={cn(
-        'bg-beige rounded-2xl overflow-hidden h-fit md:hover:bg-green md:hover:cursor-pointer md:hover:-translate-y-2 group relative transition-all duration-500',
-        isActive && 'bg-green -translate-y-2',
+        'rounded-2xl overflow-hidden h-fit md:hover:-translate-y-2 group relative transition-all duration-500 bg-green',
+        isActive && '-translate-y-2',
         className,
       )}
       ref={card.ref as React.Ref<HTMLElement>}
@@ -61,10 +78,10 @@ export const Card: React.FC<{
         />
 
         {showCategories && (hasCategories || servings) && (
-          <ul className="absolute bottom-2 left-2 text-sm flex gap-2 z-10 text-darkBrown font-anton uppercase">
+          <ul className="absolute bottom-2 left-2 text-sm flex gap-2 z-10 font-anton uppercase text-darkBrown">
             {categories?.map((category, index) => {
               if (typeof category === 'object') {
-                const title = category.title || 'Untitled category'
+                const catTitle = category.title || 'Untitled category'
                 return (
                   <li
                     key={`cat-${index}`}
@@ -78,7 +95,7 @@ export const Card: React.FC<{
                         'xl:translate-y-0 xl:opacity-100 xl:[transition-delay:var(--delay)]',
                     )}
                   >
-                    {title}
+                    {catTitle}
                   </li>
                 )
               }
@@ -102,18 +119,29 @@ export const Card: React.FC<{
           </ul>
         )}
       </div>
-      <div
-        className={cn(
-          'p-4 md:group-hover:text-beige transition-all duration-500',
-          isActive && 'text-beige',
-        )}
-      >
+      <div className={cn('p-4 transition-all duration-500', bgClass, contentBgClass)}>
         {titleToUse && (
-          <h3 className="line-clamp-2 text-xl/6 font-anton font-bold uppercase">{titleToUse}</h3>
+          <h3
+            className={cn(
+              'line-clamp-2 text-xl/6 font-anton font-bold uppercase transition-all duration-500',
+              isDarkBg ? 'text-beige' : 'text-darkBrown',
+              'md:group-hover:text-darkBrown',
+            )}
+          >
+            {titleToUse}
+          </h3>
         )}
         {description && (
           <div className="mt-2">
-            <p className="line-clamp-2">{sanitizedDescription}</p>
+            <p
+              className={cn(
+                'line-clamp-2 transition-all duration-500',
+                isDarkBg ? 'text-beige' : 'text-darkBrown',
+                'md:group-hover:text-darkBrown',
+              )}
+            >
+              {sanitizedDescription}
+            </p>
           </div>
         )}
       </div>

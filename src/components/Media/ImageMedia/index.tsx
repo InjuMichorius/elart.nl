@@ -32,13 +32,24 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let height: number | undefined
   let alt = altFromProps
   let src: StaticImageData | string = srcFromProps || ''
+  let focalX: number | undefined
+  let focalY: number | undefined
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const {
+      alt: altFromResource,
+      height: fullHeight,
+      url,
+      width: fullWidth,
+      focalX: fx,
+      focalY: fy,
+    } = resource
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
+    focalX = fx ?? 50
+    focalY = fy ?? 50
 
     const cacheTag = resource.updatedAt
     src = `${url}?${cacheTag}`
@@ -46,12 +57,16 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
-  // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
     ? sizeFromProps
     : Object.entries(breakpoints)
         .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
         .join(', ')
+
+  const imageStyle: React.CSSProperties =
+    fill && focalX !== undefined && focalY !== undefined
+      ? { objectPosition: `${focalX}% ${focalY}%` }
+      : {}
 
   return (
     <picture>
@@ -68,6 +83,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         sizes={sizes}
         src={src}
         width={!fill ? width : undefined}
+        style={imageStyle}
       />
     </picture>
   )

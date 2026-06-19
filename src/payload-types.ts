@@ -257,6 +257,16 @@ export interface Recipe {
         id?: string | null;
       }[]
     | null;
+  nutritionalValues?: {
+    energyKj?: number | null;
+    energyKcal?: number | null;
+    fats?: number | null;
+    saturatedFats?: number | null;
+    carbohydrates?: number | null;
+    sugars?: number | null;
+    proteins?: number | null;
+    salt?: number | null;
+  };
   meta?: {
     title?: string | null;
     /**
@@ -310,7 +320,13 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  /**
+   * Focal point X position (0-100%)
+   */
   focalX?: number | null;
+  /**
+   * Focal point Y position (0-100%)
+   */
   focalY?: number | null;
   sizes?: {
     thumbnail?: {
@@ -1306,6 +1322,18 @@ export interface RecipesSelect<T extends boolean = true> {
         unit?: T;
         id?: T;
       };
+  nutritionalValues?:
+    | T
+    | {
+        energyKj?: T;
+        energyKcal?: T;
+        fats?: T;
+        saturatedFats?: T;
+        carbohydrates?: T;
+        sugars?: T;
+        proteins?: T;
+        salt?: T;
+      };
   meta?:
     | T
     | {
@@ -1866,6 +1894,34 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StappenBlock".
+ */
+export interface StappenBlock {
+  steps: {
+    title?: string | null;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stappen';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

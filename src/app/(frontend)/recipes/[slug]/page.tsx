@@ -80,13 +80,15 @@ export default async function Recipe({ params: paramsPromise }: Args) {
                 })) ?? [],
             }}
           />
-          <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
-          {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
-            <RelatedRecipes
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={recipe.relatedRecipes.filter(isRecipe)}
-            />
-          )}
+          <div className="w-full">
+            <RichText className="max-w-[48rem]" data={recipe.content} enableGutter={false} />
+            {recipe.relatedRecipes && recipe.relatedRecipes.length > 0 && (
+              <RelatedRecipes
+                className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
+                docs={recipe.relatedRecipes.filter(isRecipe)}
+              />
+            )}
+          </div>
         </div>
       </div>
     </article>

@@ -40,5 +40,21 @@ export const Media: CollectionConfig = {
         features: ({ defaultFeatures }) => defaultFeatures,
       }),
     },
+    {
+      name: 'focalX',
+      type: 'number',
+      admin: {
+        description: 'Focal point X position (0-100%)',
+        step: 1,
+      },
+    },
+    {
+      name: 'focalY',
+      type: 'number',
+      admin: {
+        description: 'Focal point Y position (0-100%)',
+        step: 1,
+      },
+    },
   ],
 }

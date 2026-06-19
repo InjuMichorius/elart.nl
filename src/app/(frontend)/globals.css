@@ -127,7 +127,7 @@ html[data-theme='light'] {
 }
 
 body {
-  background-color: var(--color-beige);
+  background-color: var(--color-beige-dark);
 }
 
 /* Hide scrollbar but keep scroll functionality */
