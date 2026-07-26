@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import IngredientList from '@/components/IngredientList'
+import Keukengerei from '@/components/Keukengerei'
 import NutritionFacts from '@/components/NutritionFacts'
 import type { Recipe } from '@/payload-types'
 
@@ -11,15 +12,23 @@ interface IngredientItem {
   unit?: string
 }
 
+type KeukengereiItem = { item: string }
+
 type NutritionData = NonNullable<Recipe['nutrition']>
 
 type Props = {
   defaultServings: number
   ingredientsList: IngredientItem[]
+  keukengerei?: KeukengereiItem[]
   nutrition?: NutritionData | null
 }
 
-export default function RecipeSidebar({ defaultServings, ingredientsList, nutrition }: Props) {
+export default function RecipeSidebar({
+  defaultServings,
+  ingredientsList,
+  keukengerei,
+  nutrition,
+}: Props) {
   const [servings, setServings] = useState<number>(defaultServings || 1)
 
   const handleIncrease = () => setServings((prev) => prev + 1)
@@ -44,6 +53,7 @@ export default function RecipeSidebar({ defaultServings, ingredientsList, nutrit
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
       />
+      {keukengerei && keukengerei.length > 0 && <Keukengerei items={keukengerei} />}
       {hasAllNutrition && <NutritionFacts nutrition={nutrition} />}
     </div>
   )

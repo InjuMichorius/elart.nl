@@ -258,6 +258,12 @@ export interface Recipe {
         id?: string | null;
       }[]
     | null;
+  keukengerei?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * All fields must be filled in for the nutrition table to appear on the recipe page.
    */
@@ -1351,6 +1357,12 @@ export interface RecipesSelect<T extends boolean = true> {
         ingredient?: T;
         amount?: T;
         unit?: T;
+        id?: T;
+      };
+  keukengerei?:
+    | T
+    | {
+        item?: T;
         id?: T;
       };
   nutrition?:

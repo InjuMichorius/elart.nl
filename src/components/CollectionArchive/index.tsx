@@ -4,11 +4,12 @@ import React from 'react'
 import { Card, CardRecipeData } from '@/components/Card'
 
 export type Props = {
+  cardClassName?: string
   recipes: CardRecipeData[]
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
-  const { recipes } = props
+  const { cardClassName, recipes } = props
 
   return (
     <div className={cn('container')}>
@@ -18,7 +19,12 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             if (typeof result === 'object' && result !== null) {
               return (
                 <div className="col-span-4" key={index}>
-                  <Card className="h-full" doc={result} relationTo="recipes" showCategories />
+                  <Card
+                    className={cn('h-full', cardClassName)}
+                    doc={result}
+                    relationTo="recipes"
+                    showCategories
+                  />
                 </div>
               )
             }

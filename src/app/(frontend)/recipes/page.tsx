@@ -16,7 +16,7 @@ const queryRecipes = cache(async () => {
 
   return payload.find({
     collection: 'recipes',
-    depth: 0,
+    depth: 1,
     limit: 12,
     // @ts-expect-error: Payload types don't support string[] for populate yet
     populate: ['meta.image'],

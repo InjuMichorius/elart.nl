@@ -166,6 +166,18 @@ export const Recipes: CollectionConfig<'recipes'> = {
               ],
             },
             {
+              name: 'keukengerei',
+              type: 'array',
+              label: 'Keukengerei',
+              fields: [
+                {
+                  name: 'item',
+                  type: 'text',
+                  required: true,
+                },
+              ],
+            },
+            {
               name: 'nutrition',
               type: 'group',
               label: 'Nutritional Values (per serving)',

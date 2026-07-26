@@ -21,8 +21,7 @@ const querySearch = cache(async (query: string) => {
 
   return payload.find({
     collection: 'search',
-    depth: 0,
-    limit: 12,
+    depth: 1,
     select: {
       title: true,
       slug: true,
@@ -66,11 +65,11 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   const recipes = await querySearch(query)
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-24 pb-24  bg-beigeDark">
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none text-center">
-          <h1 className="mb-8 lg:mb-16">Search</h1>
+          <h1 className="mb-8 lg:mb-16">Zoeken</h1>
 
           <div className="max-w-[50rem] mx-auto">
             <Search />
@@ -79,7 +78,9 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {recipes.totalDocs > 0 ? (
-        <CollectionArchive recipes={recipes.docs as CardRecipeData[]} />
+        <CollectionArchive
+          recipes={recipes.docs as CardRecipeData[]}
+        />
       ) : (
         <div className="container">No results found.</div>
       )}

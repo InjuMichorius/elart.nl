@@ -76,6 +76,7 @@ export default async function Recipe({ params: paramsPromise }: Args) {
                 unit: item.unit ?? undefined,
               })) ?? []
             }
+            keukengerei={recipe.keukengerei ?? undefined}
             nutrition={recipe.nutrition}
           />
           <div>

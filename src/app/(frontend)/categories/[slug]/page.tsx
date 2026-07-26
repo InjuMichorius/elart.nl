@@ -27,7 +27,7 @@ const queryRecipesByCategory = cache(async (categoryId: string) => {
       categories: { equals: categoryId },
     },
     limit: 12,
-    depth: 0,
+    depth: 1,
     select: {
       title: true,
       slug: true,
@@ -53,7 +53,7 @@ export default async function CategoryPage({
   const recipesResult = await queryRecipesByCategory(category.id)
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-24 pb-24 bg-beigeDark">
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
           <h1>Recepten in {category.title}</h1>
@@ -67,7 +67,7 @@ export default async function CategoryPage({
           totalDocs={recipesResult.totalDocs}
         />
       </div>
-      <CollectionArchive recipes={recipesResult.docs} />
+      <CollectionArchive cardClassName="bg-beige" recipes={recipesResult.docs} />
       {recipesResult.docs.length === 0 && (
         <div className="container mt-8">
           <p>Geen recepten gevonden in deze categorie.</p>
